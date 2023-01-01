@@ -1,10 +1,14 @@
 
 import { useState, useEffect} from 'react';
+import {useHistory} from 'react-router-dom'
+import Login from './login';
 
 function SignUp(){
+const navigate = useHistory()
 const [username,SetUsername] = useState('')
 const [password,SetPassword] = useState('')  
 const [token,setToken] = useState('');
+
 
 const TOKEN_STORAGE_KEY = 'test_token';
 const BASE_URL= 'https://strangers-things.herokuapp.com/api/';
@@ -97,6 +101,10 @@ return (
                 setToken(responseToken)
                 console.log(localStorage.getItem(TOKEN_STORAGE_KEY));
                 console.log("You have signed up.")
+                
+                  navigate.push('/login')
+                
+
                 
                 
               })

@@ -11,3 +11,46 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.links * {
+  text-decoration: none;
+  list-style-type: none;
+  color:black;
+  margin-top: 0 auto;
+}
+
+.links {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-content: space-around;
+  
+}
+
+*{
+  box-sizing: border-box;
+  margin:0;
+}
+
+
+.container {
+  display:flex;
+  justify-content: center;
+  text-align: center;
+  margin:0 auto;
+  justify-content: space-around;
+  
+}
+
+.createpostForm *{
+  display:flex;
+  flex-direction: column;
+  margin:auto;
+  text-align: center;
+  justify-content: center;
+  width:150px;
+  
+  
+  
+}

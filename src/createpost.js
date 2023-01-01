@@ -53,25 +53,48 @@ function CreatePost(){
   setDescription(event.target.value)
  }
     
+const labelStyle ={
+  width:'2em'
+}
 
+const buttonStyle ={
+textAlign:'center',
+width:'6em',
+marginTop:'1em'
+}
 
 
 
     return (
-        <div style={{
-            display:'flex',
-            flexDirection:'column'
-        }}>
-            <form onSubmit={(e)=>{
+        <div classname = 'container'
+          //  style={{
+          //  display:'flex',
+          //  flexDirection:'column',
+          //  justifyContent:'center'
+            
+       // }}
+        >
+            <form className='createpostForm'
+       //     style={{
+       //     display:'flex',
+       //     flexDirection:'column',
+       //     padding:'1em',
+       //     justifyContent:'space-evenly',
+            
+            
+      //  }}
+            onSubmit={(e)=>{
               setTitle('')
               setDescription('')
               setPrice('')
               setLocation('')
+              alert('Post created!')
               e.preventDefault();
             }}>
 
 
-                <label>Title:
+                <label
+                >Title:
                     <input
                     placeholder="Enter Title"
                     onChange={handleTitle}
@@ -80,7 +103,8 @@ function CreatePost(){
                  </label>
 
                  
-                <label>Description:
+                <label
+                >Description:
                     <input
                     placeholder="Enter Description"
                     onChange={handleDescription}
@@ -89,7 +113,8 @@ function CreatePost(){
                 </label>
 
 
-                <label>Price:
+                <label
+                >Price:
                     <input
                     placeholder="Enter Price"
                     onChange={handlePrice}
@@ -98,14 +123,17 @@ function CreatePost(){
                 </label>
 
 
-                <label>Location:
+                <label
+                >Location:
                     <input
                     placeholder="Enter Location"
                     onChange={handleLocation}
                     value={location}
                     ></input>
                 </label>
-                <button onClick={sendPost}>Submit</button>
+                <button 
+                style={buttonStyle}
+                onClick={sendPost}>Submit</button>
             </form>
         </div>
     )

@@ -1,12 +1,12 @@
-import logo from './logo.svg';
+
 import './App.css';
 import React, { useState , useEffect } from 'react';
 import Login from './login';
 import Post from './getpost';
 import SignUp from './signup';
 import CreatePost from './createpost';
+import ProfilePage from './Profile';
 import { BrowserRouter,Route,Link } from 'react-router-dom';
-
 
 
 
@@ -33,14 +33,14 @@ function App() {
 
   const [username,SetUsername] = useState('')
   const [password,SetPassword] = useState('')  
-  const [token,setToken] = useState('');
+  const [token,setToken] = useState(localStorage.getItem('TOKEN_STORAGE_KEY'));
   const [posts,setPosts] = useState([]);
 
-  useEffect(()=>{
-    const tokenStorage = localStorage.getItem('TOKEN_STORAGE_KEY');
-    setToken(tokenStorage)
+ // useEffect(()=>{
+ //   const tokenStorage = localStorage.getItem('TOKEN_STORAGE_KEY');
+ //   setToken(tokenStorage)
     
-  },[]);
+ // },[]);
   
 
 
@@ -50,32 +50,41 @@ function App() {
     }
   }
 
+  function LogOut(){
 
+    return(
+      <button onClick={
+        () => {
+          localStorage.clear(TOKEN_STORAGE_KEY)
+          setToken('');
+          alert('You have been logged off')
+        }
+      }>Log Out</button>
+    )
+  }
 
-  
+ //const tokenStorage1 = localStorage.getItem('TOKEN_STORAGE_KEY')
+ 
   return (
     <BrowserRouter>
     <div 
     style={{
-      margin:'0',
-      padding:'0',
       backgroundColor:'#6abadeba'
     }}
     className="App">
 
-      <div
-      style ={{
-        display:'flex',
-        justifyContent:'space-evenly'
-      }}>
-        <Link to='/signup'>SignUp</Link>
-        <Link to='/login'>Login</Link>
-        <Link to='/post'>See All Post</Link>
-        <Link to='/createpost'>Create Post</Link>
-        <p>Hello {username}</p>
+      <div>
+        <ul className="links">
+      <li><Link to='/signup'>SignUp</Link></li>
+      <li> <Link to='/login'>Login</Link></li>
+      <li> <Link to='/post'>See All Post</Link></li>
+     {(token) ?<li> <Link to='/createpost'>Create Post</Link></li> :null}
+      {(token) ?<li> <Link to='/profilepage'>My Profile</Link></li> :null}
+      {(token) ? <LogOut /> :null}
+        </ul>
       </div>
       
-      <h1>Stranger Things</h1>
+      <h1>Welcome to Stranger Things</h1>
 
 
     <Route path='/signup'>
@@ -83,7 +92,7 @@ function App() {
     </Route>
 
     <Route exact path='/login'>
-    <Login/>
+    <Login setToken={setToken}/>
     </Route>
 
     <Route path='/post'>
@@ -92,6 +101,10 @@ function App() {
     
     <Route path='/createpost'>
     <CreatePost/>
+    </Route>
+
+    <Route path='/profilepage'>
+      <ProfilePage/>
     </Route>
  
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 import Post from "./getpost";
-
+import { useHistory } from "react-router-dom";
 
 //const BASE_URL= 'https://strangers-things.herokuapp.com/api/';
 //const COHORT_NAME = '2209-FTB-ET-WEB-PT';
@@ -9,9 +9,9 @@ import Post from "./getpost";
 
 
 
-function Login(){
+function Login(props){
 
-
+const navigate = useHistory()
  
  // useEffect(()=>{
  //   localStorage.setItem('tokenKey',JSON.stringify(token));
@@ -34,9 +34,7 @@ function Login(){
     const [password,SetPassword] = useState('')
 
 
-    const changePage = () => {
-    Post()
-    }
+    
     
     
     
@@ -77,9 +75,12 @@ function Login(){
                 console.log("You have been logged in.")
                 const responseToken = response.data.token;
                 console.log(responseToken)
+                console.log(response)
                 localStorage.setItem('TOKEN_STORAGE_KEY',responseToken)
-                
                 setToken(responseToken);
+                props.setToken(responseToken)
+                
+                  navigate.push('/post')
                 
               
                 
@@ -131,22 +132,7 @@ function Login(){
   
 
 
-    function LogOut(){
 
-      return(
-        <button onClick={
-          () => {
-            localStorage.clear(TOKEN_STORAGE_KEY)
-            alert('You have been logged off')
-          }
-        }>Log Out</button>
-      )
-      
-     // localStorage.clear(TOKEN_STORAGE_KEY)
-      
-    //  alert('you have been logged out')
-      
-    }
 
     function MakeHeaders(){
       const currentUser = localStorage.getItem(TOKEN_STORAGE_KEY)
@@ -155,7 +141,7 @@ function Login(){
       return(
         <div>
           <p>{currentUser}</p>
-          <LogOut/>
+          
         </div>
       )
     }

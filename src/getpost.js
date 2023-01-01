@@ -7,6 +7,7 @@ function Post(){
     const BASE_URL= 'https://strangers-things.herokuapp.com/api/';
     const COHORT_NAME = '2209-FTB-ET-WEB-PT';
     const TOKEN_STORAGE_KEY = localStorage.getItem("TOKEN_STORAGE_KEY")
+    
 
     const [message , setMessage] = useState('')
 
@@ -42,24 +43,25 @@ function Post(){
 
 
 
-   function isAuthor(e){
-    const postID = e.target.getAttribute('postID')
-    const currentUser = localStorage.getItem('TOKEN_STORAGE_KEY')
-    console.log(postID)
-    console.log(currentUser)
-
-   }
+  
 
 
 
 
     function getPosts(){
         try{
-            const response = fetch(`${BASE_URL}${COHORT_NAME}/posts`)
+            const response = fetch(`${BASE_URL}${COHORT_NAME}/posts`, {           
+            method:'GET',
+            headers:{
+                'Content-Type' :  'application/json',
+                'Authorization' : `Bearer ${TOKEN_STORAGE_KEY}`        
+             }})
+            
             .then(response => response.json())
             .then(response => {
                 console.log(response.data.posts);
                 setPosts(response.data.posts)
+                console.log(response)
             })
             
         }catch{
@@ -109,7 +111,8 @@ function Post(){
     alignSelf:'center',
     textAlign:'center',
     border:'solid',
-    padding:'5px'
+    padding:'5px',
+    margin:'auto'
   }
 
 
@@ -119,6 +122,8 @@ function Post(){
         <div>
             {
                 posts.map((post) => {
+                        const isAuthor = post.isAuthor;
+
                     return (
                         <div style={postCardStyle} key={post._id}>
                             <li
@@ -126,10 +131,10 @@ function Post(){
                                 listStyleType:'none'
                             }}
                             >
-                            <ul>{post.title}</ul>
-                            <ul>{post.description}</ul>
-                            <ul>{post.price}</ul>
-                            <ul>{post.location}</ul>
+                            <h3>Title:{post.title}</h3>
+                            <ul>Description:{post.description}</ul>
+                            <ul>Price:{post.price}</ul>
+                            <ul>Location:{post.location}</ul>
                             <ul>Post from {post.author.username}</ul>
                             </li>
                             <form
@@ -148,13 +153,12 @@ function Post(){
                             onClick={sendMessage}
                             >Send</button>
                             </form>
-                            <button onClick={deletePost}
+                            
+                           { 
+                           (isAuthor)? <button onClick={deletePost}
                             postID={post._id}
-                            >Delete</button>
-                            <button
-                            postID={post._id}
-                            onClick={isAuthor}
-                            >Author Test</button>
+                            >Delete</button>:null
+                           }
                         </div>
                     )
 
